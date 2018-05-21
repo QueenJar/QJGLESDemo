@@ -47,6 +47,14 @@
                 <category android:name="com.dandy.demo.category.OPENGL" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".tab.opengl.psblend.NormalAty"
+            android:label="PS BlendMode/Normal">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.dandy.demo.category.OPENGL" />
+            </intent-filter>
+        </activity>
 
     </application>
 
