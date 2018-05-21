@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.queenjar.demo.tab.BaseDemoAty;
-import com.queenjar.helper.android.LogHelper;
+import com.queenjar.helper.android.ToastHelper;
 
 /**
  * <pre>
@@ -44,7 +44,7 @@ public class FilePickAty extends BaseDemoAty {
                 try {
                     startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), ACTIVITY_REQUEST_CODE_File_PICK);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    LogHelper.showToast(FilePickAty.this, "Please install a File Manager.");
+                    ToastHelper.showToast(FilePickAty.this, "Please install a File Manager.");
                 }
             }
         });
@@ -60,9 +60,9 @@ public class FilePickAty extends BaseDemoAty {
             Uri uri = data.getData();
             String path = getPath(this, uri);
             if (path == null) {
-                LogHelper.showToast(this, "path is null");
+                ToastHelper.showToast(this, "path is null");
             } else {
-                LogHelper.showToast(this, "path=" + path);
+                ToastHelper.showToast(this, "path=" + path);
             }
         }
     }

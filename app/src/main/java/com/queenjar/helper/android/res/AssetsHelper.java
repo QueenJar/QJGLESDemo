@@ -10,7 +10,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.queenjar.helper.android.LogHelper;
+import com.queenjar.helper.QJLogHelper;
 import com.queenjar.helper.java.JFileHelper;
 
 /**
@@ -39,13 +39,13 @@ public class AssetsHelper {
      * @return
      */
     public static InputStream getInputStream(Context context, String fileAssetPath) {
-        LogHelper.d(TAG, LogHelper.getThreadName());
+        QJLogHelper.d(TAG, QJLogHelper.getThreadName());
         InputStream ins = null;
         try {
             ins = context.getAssets().open(fileAssetPath);
         } catch (IOException e) {
             e.printStackTrace();
-            LogHelper.d(TAG, LogHelper.getThreadName() + " e=" + e.getMessage());
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + " e=" + e.getMessage());
         }
         return ins;
     }
@@ -80,10 +80,10 @@ public class AssetsHelper {
             out.flush();
             out.close();
             out = null;
-            LogHelper.d(TAG, "File Copied in storage");
+            QJLogHelper.d(TAG, "File Copied in storage");
             return cacheFilePath;
         } catch (Exception e) {
-            LogHelper.d(TAG, "ERROR : " + e.toString());
+            QJLogHelper.d(TAG, "ERROR : " + e.toString());
         }
         return "";
     }

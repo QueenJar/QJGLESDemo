@@ -1,6 +1,6 @@
 package com.queenjar.helper.java.basedata;
 
-import com.queenjar.helper.android.LogHelper;
+import com.queenjar.helper.QJLogHelper;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -48,7 +48,7 @@ public class StringHelper {
         while (matcher.find()) {
             // int start = m.start();
             String url = matcher.group();
-            LogHelper.d(TAG, "-----------url=" + url);
+            QJLogHelper.d(TAG, "-----------url=" + url);
             if (emailAddress != null && emailAddress.trim().equals(url)) {
                 flag = true;
             }
@@ -475,6 +475,6 @@ public class StringHelper {
     public static void main(String[] args) {
         String curPath = "sdcard/test";
         String test = getParentDirectory(curPath);
-        LogHelper.d(TAG, "test dir=" + test);
+        QJLogHelper.d(TAG, "test dir=" + test);
     }
 }

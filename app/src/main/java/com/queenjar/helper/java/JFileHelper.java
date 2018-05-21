@@ -1,5 +1,7 @@
 package com.queenjar.helper.java;
 
+import com.queenjar.helper.QJLogHelper;
+
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -104,24 +106,24 @@ public class JFileHelper {
      * @return
      */
     public static boolean copyFile(InputStream ins, String destFileFullPath) {
-        LogHelper.d(TAG, LogHelper.getThreadName() + "destFileFullPath-" + destFileFullPath);
+        QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "destFileFullPath-" + destFileFullPath);
         FileOutputStream fos = null;
         try {
             File file = new File(destFileFullPath);
-            LogHelper.d(TAG, LogHelper.getThreadName() + "开始读入");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "开始读入");
             fos = new FileOutputStream(file);
-            LogHelper.d(TAG, LogHelper.getThreadName() + "开始写出");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "开始写出");
             byte[] buffer = new byte[8192];
             int count = 0;
-            LogHelper.d(TAG, LogHelper.getThreadName() + "准备循环了");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "准备循环了");
             while ((count = ins.read(buffer)) > 0) {
                 fos.write(buffer, 0, count);
             }
-            LogHelper.d(TAG, LogHelper.getThreadName() + "已经创建该文件");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "已经创建该文件");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            LogHelper.d(TAG, LogHelper.getThreadName() + e.getMessage());
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + e.getMessage());
             return false;
         } finally {
             try {
@@ -133,13 +135,13 @@ public class JFileHelper {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                LogHelper.d(TAG, LogHelper.getThreadName() + e.getMessage());
+                QJLogHelper.d(TAG, QJLogHelper.getThreadName() + e.getMessage());
             }
         }
     }
 
     public static boolean copyFolder(String srcFolderFullPath, String destFolderFullPath) {
-        LogHelper.d(TAG, LogHelper.getThreadName() + "srcFolderFullPath-" + srcFolderFullPath + " destFolderFullPath-" + destFolderFullPath);
+        QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "srcFolderFullPath-" + srcFolderFullPath + " destFolderFullPath-" + destFolderFullPath);
         try {
             boolean success = (new File(destFolderFullPath)).mkdirs(); // 如果文件夹不存在
             // 则建立新文件夹
@@ -165,7 +167,7 @@ public class JFileHelper {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            LogHelper.d(TAG, LogHelper.getThreadName() + e.getMessage());
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + e.getMessage());
             return false;
         }
         return true;
@@ -213,7 +215,7 @@ public class JFileHelper {
     }
 
     public static InputStream getInputStreamFromPath(String path) {
-        LogHelper.d(TAG, LogHelper.getThreadName());
+        QJLogHelper.d(TAG, QJLogHelper.getThreadName());
         InputStream ins = null;
         // File file = new File(path);
         try {
@@ -247,13 +249,13 @@ public class JFileHelper {
     public static void deleteAppointedFilesInDirectory(String targetFolderFullPath, String fileSimpleName) {
         File file = new File(targetFolderFullPath);
         if (!file.exists()) {// 文件夹不存在，不用查找
-            LogHelper.d(TAG, LogHelper.getThreadName() + "file does not exist");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "file does not exist");
             return;
         }
         String[] files = file.list();
         File temp = null;
         if (files == null || files.length == 0) {// 文件夹下没有子文件或子文件夹，不用查找
-            LogHelper.d(TAG, LogHelper.getThreadName() + "files.length == 0");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "files.length == 0");
             return;
         }
         for (int i = 0; i < files.length; i++) {
@@ -287,14 +289,14 @@ public class JFileHelper {
     public static void deleteAppointedDirectorysInDirectory(String targetFolderFullPath, String directorySimpleName) {
         File file = new File(targetFolderFullPath);
         if (file.getName().equals(directorySimpleName)) {// 如果该文件夹已经是要删除的文件夹名称了，直接删除这个文件夹
-            LogHelper.d(TAG, LogHelper.getThreadName() + " file.getName()=" + file.getName() + " directorySimpleName=" + directorySimpleName);
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + " file.getName()=" + file.getName() + " directorySimpleName=" + directorySimpleName);
             deleteFolder(targetFolderFullPath);
             return;
         }
         String[] files = file.list();
         File temp = null;
         if (files == null || files.length == 0) {// 文件夹下没有子文件或子文件夹，不用查找
-            LogHelper.d(TAG, LogHelper.getThreadName() + "files.length == 0");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "files.length == 0");
             return;
         }
         for (int i = 0; i < files.length; i++) {
@@ -322,20 +324,20 @@ public class JFileHelper {
      * @return
      */
     public static boolean deleteFolder(String targetFolderFullPath) {
-        LogHelper.d(TAG, LogHelper.getThreadName() + "targetFolderFullPath-" + targetFolderFullPath);
+        QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "targetFolderFullPath-" + targetFolderFullPath);
         File file = new File(targetFolderFullPath);
         if (!file.exists()) {
-            LogHelper.d(TAG, LogHelper.getThreadName() + "file does not exist");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "file does not exist");
             return true;
         }
         String[] files = file.list();
         File temp = null;
         if (files == null) {
-            LogHelper.d(TAG, LogHelper.getThreadName() + "files == null");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "files == null");
             return true;
         }
         if (files.length == 0) {
-            LogHelper.d(TAG, LogHelper.getThreadName() + "files.length == 0");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "files.length == 0");
             boolean success = file.delete();
             return success;
         }

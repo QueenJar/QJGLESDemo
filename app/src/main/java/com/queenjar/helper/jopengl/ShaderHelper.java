@@ -2,7 +2,7 @@ package com.queenjar.helper.jopengl;
 
 import android.opengl.GLES20;
 
-import com.queenjar.helper.android.LogHelper;
+import com.queenjar.helper.QJLogHelper;
 
 /**
  * <pre>
@@ -60,13 +60,13 @@ public class ShaderHelper {
         GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, linkStatus, 0); // 获取program的链接情况
         // 若链接失败则报错并删除程序
         if (linkStatus[0] != GLES20.GL_TRUE) {
-            LogHelper.d(TAG + "_ES20_ERROR", LogHelper.getThreadName() + "Could not link program: ");
-            LogHelper.d(TAG + "_ES20_ERROR", LogHelper.getThreadName() + GLES20.glGetProgramInfoLog(program));
+            QJLogHelper.d(TAG + "_ES20_ERROR", QJLogHelper.getThreadName() + "Could not link program: ");
+            QJLogHelper.d(TAG + "_ES20_ERROR", QJLogHelper.getThreadName() + GLES20.glGetProgramInfoLog(program));
             GLES20.glDeleteProgram(program);
             program = 0;
             throw new RuntimeException("Error creating program.");
         }
-        LogHelper.d(TAG, LogHelper.getThreadName() + "program ID=" + program);
+        QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "program ID=" + program);
         GLES20.glDeleteShader(vertexShader);
         GLES20.glDeleteShader(fragShader);
         return program;
@@ -103,7 +103,7 @@ public class ShaderHelper {
         // 创建一个新shader
         int shader = GLES20.glCreateShader(shaderType);
         if (shader == 0) {// 创建shader不成功
-            throw new RuntimeException(TAG + LogHelper.getThreadName() + " Error creating vertex shader.");
+            throw new RuntimeException(TAG + QJLogHelper.getThreadName() + " Error creating vertex shader.");
         } // 若创建成功则加载shader
         // 加载shader的源代码
         GLES20.glShaderSource(shader, source);
@@ -114,8 +114,8 @@ public class ShaderHelper {
         // 获取Shader的编译情况
         GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, compiled, 0);
         if (compiled[0] == 0) {// 若编译失败则显示错误日志并删除此shader
-            LogHelper.d(TAG + "_ES20_ERROR", "Could not compile shader " + shaderType + ":");
-            LogHelper.d(TAG + "_ES20_ERROR", GLES20.glGetShaderInfoLog(shader));
+            QJLogHelper.d(TAG + "_ES20_ERROR", "Could not compile shader " + shaderType + ":");
+            QJLogHelper.d(TAG + "_ES20_ERROR", GLES20.glGetShaderInfoLog(shader));
             GLES20.glDeleteShader(shader);
             shader = 0;
         }

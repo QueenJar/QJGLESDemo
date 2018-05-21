@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.pm.ConfigurationInfo;
 import android.opengl.GLES20;
 
-import com.queenjar.helper.android.LogHelper;
+import com.queenjar.helper.QJLogHelper;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -33,7 +33,7 @@ public class GLCommonUtils {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
         boolean supportsEs2 = configurationInfo.reqGlEsVersion >= 0x20000;
-        LogHelper.d(TAG, LogHelper.getThreadName() + " supportsEs2=" + supportsEs2);
+        QJLogHelper.d(TAG, QJLogHelper.getThreadName() + " supportsEs2=" + supportsEs2);
         return supportsEs2;
     }
 
@@ -50,7 +50,7 @@ public class GLCommonUtils {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
         boolean supportsEs2 = configurationInfo.reqGlEsVersion >= 0x30000;
-        LogHelper.d(TAG, LogHelper.getThreadName() + " supportsEs3=" + supportsEs2);
+        QJLogHelper.d(TAG, QJLogHelper.getThreadName() + " supportsEs3=" + supportsEs2);
         return supportsEs2;
     }
 
@@ -62,7 +62,7 @@ public class GLCommonUtils {
     public static void checkGlError(String op) {
         int error;
         while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
-            LogHelper.d("ES20_ERROR", LogHelper.getThreadName() + op + ": glError " + error + " errString=" + errString(error));
+            QJLogHelper.d("ES20_ERROR", QJLogHelper.getThreadName() + op + ": glError " + error + " errString=" + errString(error));
             throw new RuntimeException(op + ": glError " + error + " errString=" + errString(error));
         }
     }
@@ -116,7 +116,7 @@ public class GLCommonUtils {
      */
     public static boolean checkIfContextSupportsExtension(GL10 gl, String extension) {
         String extensions = " " + gl.glGetString(GL10.GL_EXTENSIONS) + " ";
-        LogHelper.d(TAG, LogHelper.getThreadName() + "extensions=" + extensions);
+        QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "extensions=" + extensions);
         // The extensions string is padded with spaces between extensions, but not
         // necessarily at the beginning or end. For simplicity, add spaces at the
         // beginning and end of the extensions string and the extension string.

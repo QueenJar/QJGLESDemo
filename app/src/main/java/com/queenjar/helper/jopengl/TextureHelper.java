@@ -7,7 +7,7 @@ import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 
-import com.queenjar.helper.android.LogHelper;
+import com.queenjar.helper.QJLogHelper;
 import com.queenjar.helper.java.io.StreamHelper;
 
 import java.io.InputStream;
@@ -44,24 +44,24 @@ public class TextureHelper {
      * @return
      */
     public static int initTextureID(InputStream picIs, boolean recycleBmp) {
-        LogHelper.d(TAG, "initTextureID(InputStream picIs) start");
+        QJLogHelper.d(TAG, "initTextureID(InputStream picIs) start");
         if (picIs == null) {
-            LogHelper.d(TAG, LogHelper.getThreadName() + "InputStream is null");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "InputStream is null");
         } else {
-            LogHelper.d(TAG, LogHelper.getThreadName() + "InputStream is not null");
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "InputStream is not null");
         }
         Bitmap bitmapTmp;
         try {
             bitmapTmp = BitmapFactory.decodeStream(picIs);
             if (bitmapTmp == null) {
-                LogHelper.d(TAG, LogHelper.getThreadName() + "Bitmap is null");
+                QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "Bitmap is null");
             } else {
-                LogHelper.d(TAG, LogHelper.getThreadName() + "Bitmap is not null");
+                QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "Bitmap is not null");
             }
         } finally {
             StreamHelper.closeIOStream(picIs);
         }
-        LogHelper.d(TAG, "initTextureID(InputStream picIs) end");
+        QJLogHelper.d(TAG, "initTextureID(InputStream picIs) end");
         return initTextureID(bitmapTmp, recycleBmp);
     }
 
@@ -71,7 +71,7 @@ public class TextureHelper {
      * @return
      */
     public static int initTextureID(Bitmap bitmap, boolean recycleBmp) {
-        LogHelper.d(TAG, "initTextureID(Bitmap bitmap)");
+        QJLogHelper.d(TAG, "initTextureID(Bitmap bitmap)");
         return initTextureID(bitmap, TextureOptions.defaultOptions(), recycleBmp);
     }
 
@@ -86,7 +86,7 @@ public class TextureHelper {
      * @return
      */
     public static int initTextureID(Bitmap bitmap, TextureOptions options, boolean recycleBmp) {
-        LogHelper.d(TAG, "initTextureID(Bitmap bitmap, TextureOptions options, boolean recycleBmp)");
+        QJLogHelper.d(TAG, "initTextureID(Bitmap bitmap, TextureOptions options, boolean recycleBmp)");
         if (options == null) {
             options = TextureOptions.defaultOptions();
         }
@@ -121,7 +121,7 @@ public class TextureHelper {
 
     public static int initTexture(Context context, int drawableId, boolean recycleBmp)// textureId
     {
-        LogHelper.d(TAG, "initTextureID(Context context, int drawableId)");
+        QJLogHelper.d(TAG, "initTextureID(Context context, int drawableId)");
         // 生成纹理ID
         int[] textures = new int[1];
         GLES20.glGenTextures(1, // 产生的纹理id的数量
