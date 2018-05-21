@@ -34,7 +34,7 @@ public class QJLogHelper {
      */
     public static void d(String tag, String content) {
         if (sIsLogDebug && mLogHelper != null) {
-            mLogHelper.d(tag, content);
+            mLogHelper.d(getRootTag() + "_" + tag, content);
         }
     }
 
@@ -46,7 +46,7 @@ public class QJLogHelper {
      */
     public static void e(String tag, String content) {
         if (sIsLogDebug && mLogHelper != null) {
-            mLogHelper.e(tag, content);
+            mLogHelper.e(getRootTag() + "_" + tag, content);
         }
     }
 
@@ -58,7 +58,7 @@ public class QJLogHelper {
      */
     public static void e(String tag, String content, Exception e) {
         if (sIsLogDebug && mLogHelper != null) {
-            mLogHelper.e(tag, content, e);
+            mLogHelper.e(getRootTag() + "_" + tag, content, e);
         }
     }
 
