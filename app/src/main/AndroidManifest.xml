@@ -38,6 +38,15 @@
                 <category android:name="com.dandy.demo.category.ANDROID" />
             </intent-filter>
         </activity>
+        <!-- **************************OpenGL********************************************-->
+        <activity
+            android:name=".tab.opengl.simple.TextureElementAty"
+            android:label="Simple/Texture Element Show">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.dandy.demo.category.OPENGL" />
+            </intent-filter>
+        </activity>
 
     </application>
 
