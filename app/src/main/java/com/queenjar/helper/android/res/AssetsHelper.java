@@ -12,12 +12,35 @@ import android.graphics.BitmapFactory;
 
 import com.queenjar.helper.QJLogHelper;
 import com.queenjar.helper.java.JFileHelper;
+import com.queenjar.helper.java.io.StreamHelper;
 
 /**
  * @author dengchukun 2016年11月18日
  */
 public class AssetsHelper {
     private static final String TAG = "AssetsHelper";
+
+    /**
+     * 从assets目录下获取文本文件内容
+     *
+     * @param context       上下文
+     * @param fileAssetPath 文本文件路径
+     * @return
+     */
+    public static String getFileContent(Context context, String fileAssetPath) {
+        InputStream ins = null;
+        try {
+            ins = context.getAssets().open(fileAssetPath);
+            byte[] contentByte = new byte[ins.available()];
+            ins.read(contentByte);
+            return new String(contentByte);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        } finally {
+            StreamHelper.closeIOStream(ins);
+        }
+        return "";
+    }
 
     /**
      * <pre>
