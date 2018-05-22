@@ -1,5 +1,6 @@
 package com.queenjar.helper;
 
+import com.queenjar.helper.imp.DefaultLogHelper;
 import com.queenjar.ihelper.ILogHelper;
 
 /**
@@ -11,7 +12,7 @@ import com.queenjar.ihelper.ILogHelper;
  * Wechat: queenjar
  */
 public class QJLogHelper {
-    private static ILogHelper mLogHelper;
+    private static ILogHelper sLogHelper = new DefaultLogHelper();
     private static boolean sIsLogDebug = true;
 
     /**
@@ -23,7 +24,7 @@ public class QJLogHelper {
      * @param logHelper ILogHelper instance
      */
     public static void setLogHelper(ILogHelper logHelper) {
-        mLogHelper = logHelper;
+        sLogHelper = logHelper;
     }
 
     /**
@@ -33,8 +34,8 @@ public class QJLogHelper {
      * </pre>
      */
     public static void d(String tag, String content) {
-        if (sIsLogDebug && mLogHelper != null) {
-            mLogHelper.d(getRootTag() + "_" + tag, content);
+        if (sIsLogDebug) {
+            sLogHelper.d(getRootTag() + "_" + tag, content);
         }
     }
 
@@ -45,8 +46,8 @@ public class QJLogHelper {
      * </pre>
      */
     public static void e(String tag, String content) {
-        if (sIsLogDebug && mLogHelper != null) {
-            mLogHelper.e(getRootTag() + "_" + tag, content);
+        if (sIsLogDebug) {
+            sLogHelper.e(getRootTag() + "_" + tag, content);
         }
     }
 
@@ -57,8 +58,8 @@ public class QJLogHelper {
      * </pre>
      */
     public static void e(String tag, String content, Exception e) {
-        if (sIsLogDebug && mLogHelper != null) {
-            mLogHelper.e(getRootTag() + "_" + tag, content, e);
+        if (sIsLogDebug) {
+            sLogHelper.e(getRootTag() + "_" + tag, content, e);
         }
     }
 
@@ -69,8 +70,8 @@ public class QJLogHelper {
      * </pre>
      */
     public static String getThreadName() {
-        if (sIsLogDebug && mLogHelper != null) {
-            return mLogHelper.getThreadName();
+        if (sIsLogDebug) {
+            return sLogHelper.getThreadName();
         }
         return "";
     }
@@ -84,8 +85,8 @@ public class QJLogHelper {
      * @return true:Debug mode
      */
     public static boolean isLogDebug() {
-        if (sIsLogDebug && mLogHelper != null) {
-            return mLogHelper.isLogDebug();
+        if (sIsLogDebug) {
+            return sLogHelper.isLogDebug();
         }
         return sIsLogDebug;
     }
@@ -99,8 +100,8 @@ public class QJLogHelper {
      * @param isLogDebug true:Debug mode
      */
     public static void setLogDebug(boolean isLogDebug) {
-        if (mLogHelper != null) {
-            mLogHelper.setLogDebug(isLogDebug);
+        if (sLogHelper != null) {
+            sLogHelper.setLogDebug(isLogDebug);
         }
         sIsLogDebug = isLogDebug;
     }
@@ -112,8 +113,8 @@ public class QJLogHelper {
      * </pre>
      */
     public static String getRootTag() {
-        if (sIsLogDebug && mLogHelper != null) {
-            return mLogHelper.getRootTag();
+        if (sIsLogDebug) {
+            return sLogHelper.getRootTag();
         }
         return "";
     }
@@ -125,8 +126,8 @@ public class QJLogHelper {
      * </pre>
      */
     public static void setRootTag(String rootTag) {
-        if (sIsLogDebug && mLogHelper != null) {
-            mLogHelper.setRootTag(rootTag);
+        if (sIsLogDebug) {
+            sLogHelper.setRootTag(rootTag);
         }
     }
 }

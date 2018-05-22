@@ -1,6 +1,6 @@
 package com.queenjar.helper.java;
 
-import com.queenjar.helper.QJALogHelper;
+import com.queenjar.helper.imp.QJALogHelper;
 
 /**
  * 打印帮助类

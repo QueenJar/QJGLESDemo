@@ -1,8 +1,8 @@
-package com.queenjar.helper.java;
+package com.queenjar.helper.imp;
 
 import com.queenjar.helper.QJLogHelper;
+import com.queenjar.ihelper.IFileHelper;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,62 +10,43 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Locale;
 
-public class JFileHelper {
-
-    private static final String TAG = JFileHelper.class.getSimpleName();
+/**
+ * <pre>
+ * </pre>
+ * Created by QueenJar
+ * Wechat: queenjar
+ */
+public abstract class QJAFileHelper implements IFileHelper {
+    private static final String TAG = "QJAFileHelper";
 
     /**
-     * 输入流转字节数组
+     * 得到文件流
      *
-     * @param in
-     * @return
-     * @throws IOException
+     * @param path 文件路劲
+     * @return 文件输入流
      */
-    public static void copyStream(InputStream is, OutputStream out) throws IOException {
+    public InputStream getInputStreamFromPath(String path) {
+        QJLogHelper.d(TAG, QJLogHelper.getThreadName());
+        InputStream ins = null;
+        // File file = new File(path);
         try {
-            int len = 0;
-            byte[] buffer = new byte[1024];
-            while ((len = is.read(buffer)) > 0) {
-                out.write(buffer, 0, len);
-            }
-            out.flush();
-        } finally {
-            closeIOStream(is, out);
+            ins = new FileInputStream(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-    }
-
-    /**
-     * 关闭io流
-     *
-     * @param closeable
-     */
-    public static void closeIOStream(Closeable... closeable) {
-        if (closeable == null) {
-            return;
-        }
-        for (Closeable ca : closeable) {
-            try {
-                if (ca == null) {
-                    continue;
-                }
-                ca.close();
-                ca = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        return ins;
     }
 
     /**
      * 判断某个路径的文件是否存在
      *
-     * @param path
+     * @param path 文件路劲
      * @return
      */
-    public static boolean isFileExit(String path) {
+    @Override
+    public boolean isFileExit(String path) {
         File f = new File(path);
         if (f.exists()) {
             return true;
@@ -78,9 +59,10 @@ public class JFileHelper {
      * 返回该文件的大小，例如1.3GB
      *
      * @param fileLength 文件长度，可以由File.getLength（）得到
-     * @return
+     * @return 回该文件的大小，例如1.3GB
      */
-    public static String formatFileLength(long fileLength) {
+    @Override
+    public String formatFileLength(long fileLength) {
         long kb = 1024;
         long mb = kb * 1024;
         long gb = mb * 1024;
@@ -103,9 +85,10 @@ public class JFileHelper {
      *
      * @param ins              该文件的输入流
      * @param destFileFullPath 要存放的文件的路径
-     * @return
+     * @return 是否复制成功
      */
-    public static boolean copyFile(InputStream ins, String destFileFullPath) {
+    @Override
+    public boolean copyFile(InputStream ins, String destFileFullPath) {
         QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "destFileFullPath-" + destFileFullPath);
         FileOutputStream fos = null;
         try {
@@ -140,7 +123,15 @@ public class JFileHelper {
         }
     }
 
-    public static boolean copyFolder(String srcFolderFullPath, String destFolderFullPath) {
+    /**
+     * 复制文件夹
+     *
+     * @param srcFolderFullPath  源文件夹
+     * @param destFolderFullPath 目标文件夹
+     * @return 是否复制成功
+     */
+    @Override
+    public boolean copyFolder(String srcFolderFullPath, String destFolderFullPath) {
         QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "srcFolderFullPath-" + srcFolderFullPath + " destFolderFullPath-" + destFolderFullPath);
         try {
             boolean success = (new File(destFolderFullPath)).mkdirs(); // 如果文件夹不存在
@@ -173,7 +164,14 @@ public class JFileHelper {
         return true;
     }
 
-    public static String getFileContent(String filePath) {
+    /**
+     * 从文件获取文件内容
+     *
+     * @param filePath 文件
+     * @return 文件内容
+     */
+    @Override
+    public String getFileContent(String filePath) {
         try {
             FileInputStream fins = new FileInputStream(filePath);
             return getFileContent(fins);
@@ -183,7 +181,14 @@ public class JFileHelper {
         return "";
     }
 
-    public static String getFileContent(InputStream ins) {
+    /**
+     * 从输入流获取文件的内容
+     *
+     * @param ins 文件输入流
+     * @return 文件内容
+     */
+    @Override
+    public String getFileContent(InputStream ins) {
         try {
             byte[] contentByte = new byte[ins.available()];
             ins.read(contentByte);
@@ -194,7 +199,15 @@ public class JFileHelper {
         return "";
     }
 
-    public static boolean copyContentToFile(String content, String destFileFullPath) {
+    /**
+     * 复制内容到某个文件
+     *
+     * @param content          要复制的内容
+     * @param destFileFullPath 目标文件
+     * @return true:复制成功
+     */
+    @Override
+    public boolean copyContentToFile(String content, String destFileFullPath) {
         FileWriter fWriter = null;
         try {
             fWriter = new FileWriter(destFileFullPath);
@@ -214,116 +227,13 @@ public class JFileHelper {
         return false;
     }
 
-    public static InputStream getInputStreamFromPath(String path) {
-        QJLogHelper.d(TAG, QJLogHelper.getThreadName());
-        InputStream ins = null;
-        // File file = new File(path);
-        try {
-            ins = new FileInputStream(path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return ins;
-    }
-
-    public static void removeFile(String file_path) {
-        try {
-            File f = new File(file_path);
-            if (!f.exists()) {
-                return;
-            }
-            f.delete();
-        } catch (Exception e) {
-        }
-    }
-
-    /**
-     * <pre>
-     * 在某个大的文件夹中删除指定名称的所有文件，
-     * 例如这个文件夹下不同的子文件夹下都有一个叫a.txt的文件，那么此时可以用这个方法来删除这个a.txt
-     * </pre>
-     *
-     * @param targetFolderFullPath 目标文件夹
-     * @param fileSimpleName       要删除的文件的名称（不要全路劲）
-     */
-    public static void deleteAppointedFilesInDirectory(String targetFolderFullPath, String fileSimpleName) {
-        File file = new File(targetFolderFullPath);
-        if (!file.exists()) {// 文件夹不存在，不用查找
-            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "file does not exist");
-            return;
-        }
-        String[] files = file.list();
-        File temp = null;
-        if (files == null || files.length == 0) {// 文件夹下没有子文件或子文件夹，不用查找
-            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "files.length == 0");
-            return;
-        }
-        for (int i = 0; i < files.length; i++) {
-            if (!files[i].equals(fileSimpleName)) {// 如果你的文件名或者文件夹的名称都和目标名称不一致了，那这个就不用判断了，直接判断下一个
-                continue;
-            }
-            if (targetFolderFullPath.endsWith(File.separator)) {
-                temp = new File(targetFolderFullPath + files[i]);
-            } else {
-                temp = new File(targetFolderFullPath + File.separator + files[i]);
-            }
-            if (temp.isFile()) {// 是文件，而且名称相同，删除
-                temp.delete();
-//                deleteAppointedFile(targetFolderFullPath + "/" + (temp.getName()).toString());
-            }
-            if (temp.isDirectory()) {// 如果是子文件夹
-                deleteAppointedFilesInDirectory(targetFolderFullPath + "/" + files[i], fileSimpleName);
-            }
-        }
-    }
-
-    /**
-     * <pre>
-     * 在某个大的文件夹中删除指定名称的所有文件夹，
-     * 例如这个文件夹下不同的子文件夹下都有一个叫.svn的文件夹，那么此时可以用这个方法来删除这个.svn夹
-     * </pre>
-     *
-     * @param targetFolderFullPath 目标文件夹
-     * @param directorySimpleName  要删除的文件夹的名称（不要全路劲）
-     */
-    public static void deleteAppointedDirectorysInDirectory(String targetFolderFullPath, String directorySimpleName) {
-        File file = new File(targetFolderFullPath);
-        if (file.getName().equals(directorySimpleName)) {// 如果该文件夹已经是要删除的文件夹名称了，直接删除这个文件夹
-            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + " file.getName()=" + file.getName() + " directorySimpleName=" + directorySimpleName);
-            deleteFolder(targetFolderFullPath);
-            return;
-        }
-        String[] files = file.list();
-        File temp = null;
-        if (files == null || files.length == 0) {// 文件夹下没有子文件或子文件夹，不用查找
-            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "files.length == 0");
-            return;
-        }
-        for (int i = 0; i < files.length; i++) {
-            if (!files[i].equals(directorySimpleName)) {// 如果你的文件名或者文件夹的名称都和目标名称不一致了，那这个就不用判断了，直接判断下一个
-                continue;
-            }
-            if (targetFolderFullPath.endsWith(File.separator)) {
-                temp = new File(targetFolderFullPath + files[i]);
-            } else {
-                temp = new File(targetFolderFullPath + File.separator + files[i]);
-            }
-            if (temp.isFile()) {// 是文件，而且名称相同，删除
-                continue;
-            }
-            if (temp.isDirectory()) {// 如果是子文件夹
-                deleteAppointedDirectorysInDirectory(targetFolderFullPath + File.separator + files[i], directorySimpleName);
-            }
-        }
-    }
-
     /**
      * 删除某个文件夹
      *
      * @param targetFolderFullPath 要删除的文件夹的路径
-     * @return
      */
-    public static boolean deleteFolder(String targetFolderFullPath) {
+    @Override
+    public boolean deleteFolder(String targetFolderFullPath) {
         QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "targetFolderFullPath-" + targetFolderFullPath);
         File file = new File(targetFolderFullPath);
         if (!file.exists()) {
@@ -363,8 +273,91 @@ public class JFileHelper {
      *
      * @param targetFileFullPath 要删除的文件的路径
      */
-    public static void deleteFile(String targetFileFullPath) {
+    @Override
+    public void deleteFile(String targetFileFullPath) {
         File file = new File(targetFileFullPath);
         file.delete();
+    }
+
+    /**
+     * <pre>
+     * 在某个大的文件夹中删除指定名称的所有文件，
+     * 例如这个文件夹下不同的子文件夹下都有一个叫a.txt的文件，那么此时可以用这个方法来删除这个a.txt
+     * </pre>
+     *
+     * @param targetFolderFullPath 目标文件夹
+     * @param fileSimpleName       要删除的文件的名称（不要全路劲）
+     */
+    @Override
+    public void deleteAppointedFilesInDirectory(String targetFolderFullPath, String fileSimpleName) {
+        File file = new File(targetFolderFullPath);
+        if (!file.exists()) {// 文件夹不存在，不用查找
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "file does not exist");
+            return;
+        }
+        String[] files = file.list();
+        File temp = null;
+        if (files == null || files.length == 0) {// 文件夹下没有子文件或子文件夹，不用查找
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "files.length == 0");
+            return;
+        }
+        for (int i = 0; i < files.length; i++) {
+            if (!files[i].equals(fileSimpleName)) {// 如果你的文件名或者文件夹的名称都和目标名称不一致了，那这个就不用判断了，直接判断下一个
+                continue;
+            }
+            if (targetFolderFullPath.endsWith(File.separator)) {
+                temp = new File(targetFolderFullPath + files[i]);
+            } else {
+                temp = new File(targetFolderFullPath + File.separator + files[i]);
+            }
+            if (temp.isFile()) {// 是文件，而且名称相同，删除
+                temp.delete();
+//                deleteAppointedFile(targetFolderFullPath + "/" + (temp.getName()).toString());
+            }
+            if (temp.isDirectory()) {// 如果是子文件夹
+                deleteAppointedFilesInDirectory(targetFolderFullPath + "/" + files[i], fileSimpleName);
+            }
+        }
+    }
+
+    /**
+     * <pre>
+     * 在某个大的文件夹中删除指定名称的所有文件夹，
+     * 例如这个文件夹下不同的子文件夹下都有一个叫.svn的文件夹，那么此时可以用这个方法来删除这个.svn夹
+     * </pre>
+     *
+     * @param targetFolderFullPath 目标文件夹
+     * @param directorySimpleName  要删除的文件夹的名称（不要全路劲）
+     */
+    @Override
+    public void deleteAppointedDirectorysInDirectory(String targetFolderFullPath, String directorySimpleName) {
+        File file = new File(targetFolderFullPath);
+        if (file.getName().equals(directorySimpleName)) {// 如果该文件夹已经是要删除的文件夹名称了，直接删除这个文件夹
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + " file.getName()=" + file.getName() + " directorySimpleName=" + directorySimpleName);
+            deleteFolder(targetFolderFullPath);
+            return;
+        }
+        String[] files = file.list();
+        File temp = null;
+        if (files == null || files.length == 0) {// 文件夹下没有子文件或子文件夹，不用查找
+            QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "files.length == 0");
+            return;
+        }
+        for (int i = 0; i < files.length; i++) {
+            if (!files[i].equals(directorySimpleName)) {// 如果你的文件名或者文件夹的名称都和目标名称不一致了，那这个就不用判断了，直接判断下一个
+                continue;
+            }
+            if (targetFolderFullPath.endsWith(File.separator)) {
+                temp = new File(targetFolderFullPath + files[i]);
+            } else {
+                temp = new File(targetFolderFullPath + File.separator + files[i]);
+            }
+            if (temp.isFile()) {// 是文件，而且名称相同，删除
+                continue;
+            }
+            if (temp.isDirectory()) {// 如果是子文件夹
+                deleteAppointedDirectorysInDirectory(targetFolderFullPath + File.separator + files[i], directorySimpleName);
+            }
+        }
     }
 }

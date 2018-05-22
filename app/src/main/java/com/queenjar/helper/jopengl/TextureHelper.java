@@ -8,7 +8,7 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 
 import com.queenjar.helper.QJLogHelper;
-import com.queenjar.helper.java.io.StreamHelper;
+import com.queenjar.helper.QJStreamHelper;
 
 import java.io.InputStream;
 
@@ -59,7 +59,7 @@ public class TextureHelper {
                 QJLogHelper.d(TAG, QJLogHelper.getThreadName() + "Bitmap is not null");
             }
         } finally {
-            StreamHelper.closeIOStream(picIs);
+            QJStreamHelper.closeIOStream(picIs);
         }
         QJLogHelper.d(TAG, "initTextureID(InputStream picIs) end");
         return initTextureID(bitmapTmp, recycleBmp);
@@ -141,7 +141,7 @@ public class TextureHelper {
         try {
             bitmapTmp = BitmapFactory.decodeStream(is);
         } finally {
-            StreamHelper.closeIOStream(is);
+            QJStreamHelper.closeIOStream(is);
         }
         // 通过输入流加载图片===============end=====================
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, // 纹理类型

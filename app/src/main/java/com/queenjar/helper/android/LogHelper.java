@@ -2,7 +2,7 @@ package com.queenjar.helper.android;
 
 import android.util.Log;
 
-import com.queenjar.helper.QJALogHelper;
+import com.queenjar.helper.imp.QJALogHelper;
 
 /**
  * <pre>

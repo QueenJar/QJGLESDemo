@@ -10,9 +10,9 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.queenjar.helper.QJFileHelper;
 import com.queenjar.helper.QJLogHelper;
-import com.queenjar.helper.java.JFileHelper;
-import com.queenjar.helper.java.io.StreamHelper;
+import com.queenjar.helper.QJStreamHelper;
 
 /**
  * @author dengchukun 2016年11月18日
@@ -37,7 +37,7 @@ public class AssetsHelper {
         } catch (Exception e1) {
             e1.printStackTrace();
         } finally {
-            StreamHelper.closeIOStream(ins);
+            QJStreamHelper.closeIOStream(ins);
         }
         return "";
     }
@@ -88,7 +88,7 @@ public class AssetsHelper {
     public static String getResourcePath(Context conetxt, final String resourceName) {
         try {
             final String cacheFilePath = conetxt.getCacheDir() + resourceName;
-            JFileHelper.removeFile(cacheFilePath);
+            QJFileHelper.deleteFile(cacheFilePath);
             AssetManager assetManager = conetxt.getAssets();
             InputStream in = assetManager.open(resourceName);
             OutputStream out = new FileOutputStream(cacheFilePath);

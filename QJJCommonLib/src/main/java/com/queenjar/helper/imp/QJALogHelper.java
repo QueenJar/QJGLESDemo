@@ -1,4 +1,4 @@
-package com.queenjar.helper;
+package com.queenjar.helper.imp;
 
 import com.queenjar.ihelper.ILogHelper;
 
