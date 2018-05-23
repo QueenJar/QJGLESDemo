@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">QJGLESDemo</string>
+
+    <string name="lab_opengl_psblend_Normal">PS BlendMode/Normal</string>
 </resources>

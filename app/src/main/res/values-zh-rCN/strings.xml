@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">QJGLESDemo</string>
+
+    <string name="lab_opengl_psblend_Normal">PS混合模式/正常</string>
+</resources>

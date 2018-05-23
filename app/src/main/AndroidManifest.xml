@@ -49,7 +49,7 @@
         </activity>
         <activity
             android:name=".tab.opengl.psblend.NormalAty"
-            android:label="PS BlendMode/Normal">
+            android:label="@string/lab_opengl_psblend_Normal">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.dandy.demo.category.OPENGL" />
