@@ -20,6 +20,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:support-v4:22.0.0'
     compile project(path: ':QJJCommonLib')
+    compile project(path: ':QJCCommonLib')
+    implementation 'com.android.support:support-v13:22.0.0'
 }

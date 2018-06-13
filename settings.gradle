@@ -1,1 +1,1 @@
-include ':app', ':QJJCommonLib'
+include ':app', ':QJJCommonLib', ':QJCCommonLib'
